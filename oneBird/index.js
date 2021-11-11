@@ -14,16 +14,12 @@ exports.handler = async (event) => {
 
   let data = null;
   let status = 500;
+  const id = event.pathParameters.id;
+  const idNum = parseInt(id);
 
   try {
     // read from our DB
-    data = await birdTable.query(id).exec((error, results) => {
-      if (error) {
-          console.error(error);
-      } else {
-          console.log(results);
-      }
-    });
+    data = await birdTable.query("id").eq(idNum).exec();
     status = 200; 
   } catch(e) {
     data = new Error(e);
